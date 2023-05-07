@@ -1,0 +1,19 @@
+{
+    "name": "rmfloris/bricklink-api",
+    "description": "Connect to the Bricklink API",
+    "autoload": {
+        "psr-4": {
+            "Rmfloris\\BricklinkApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rmfloris",
+            "email": "ralffloris@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^10",
+        "phpstan/phpstan": "^1.10"
+    }
+}
