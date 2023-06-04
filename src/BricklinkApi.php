@@ -2,14 +2,16 @@
 
 namespace Rmfloris\BricklinkApi;
 
+use Rmfloris\BricklinkApi\client\ClientExecutor;
+use Rmfloris\BricklinkApi\BricklinkApiResponse;
+
 class BricklinkApi 
 {
     private string $endpoint = 'https://api.bricklink.com/api/store/v1';
-    private string $oauthVersion = '1.0';
-    private string $consumerKey;
-    private string $consumerSecret;
-    private string $tokenValue;
-    private string $tokenSecret;
+    private string $path;
+    private string $method = "GET";
+    /** @var array<mixed> */
+    private array $params;
 
     /**
      * @param array<mixed> $params
@@ -22,11 +24,25 @@ class BricklinkApi
 			}
 		}
     }
-    /**
-     * @param array<mixed> $params
-     */
-    public function getItem($params): void 
-    {
 
+    public function getOrders(?string $direction = "in", ?string $status = '', ?bool $filed = false): void
+    {
+        $this->path = "/orders";
+
+        $this->params = [
+            "direction" => $direction,
+            "status" => $status,
+            "filed" => $filed
+        ];
+
+        $this->execute();
+    }
+
+    
+
+    private function execute(): object
+    {
+        $clientResponse = ClientExecutor::executeWithAuthorization($this->endpoint, $this->path, $this->method, $this->params, $this->getAuthorizationHeader());
+        return new BricklinkApiResponse($clientResponse);
     }
 }

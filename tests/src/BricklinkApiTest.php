@@ -5,18 +5,29 @@ use Rmfloris\BricklinkApi\BricklinkApi;
 
 final class BricklinkApiTest extends TestCase
 {
-    public function testHasRightPropertiesOnConstruction(): void
+    private object $bricklinkApi;
+
+    protected function setUp(): void
     {
-        $bricklinkApi = new BricklinkApi([
+        $this->bricklinkApi = new BricklinkApi([
             "consumerKey" => "123",
             "consumerSecret" => "456",
             "tokenValue" => "789",
             "tokenSecret" => "1011",
         ]);
+    }
+    public function testHasRightPropertiesOnConstruction(): void
+    {
+        $this->assertObjectHasProperty('consumerKey', $this->bricklinkApi);
+        $this->assertObjectHasProperty('consumerSecret', $this->bricklinkApi);
+        $this->assertObjectHasProperty('tokenValue', $this->bricklinkApi);
+        $this->assertObjectHasProperty('tokenSecret', $this->bricklinkApi);
+    }
 
-        $this->assertObjectHasProperty('consumerKey', $bricklinkApi);
-        $this->assertObjectHasProperty('consumerSecret', $bricklinkApi);
-        $this->assertObjectHasProperty('tokenValue', $bricklinkApi);
-        $this->assertObjectHasProperty('tokenSecret', $bricklinkApi);
+    public function testInitializeGetOrders(): void
+    {
+        $this->bricklinkApi->getOrders();
+        $this->assertObjectHasProperty('params', $this->bricklinkApi);
+
     }
 }
